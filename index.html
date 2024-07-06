@@ -140,6 +140,7 @@
     <script>
 	
 		let tg = window.Telegram.WebApp
+		
 	
         document.addEventListener("DOMContentLoaded", function() {
             var guests = [
@@ -209,6 +210,8 @@
             popupContent.appendChild(closeButton);
             popup.appendChild(popupContent);
             document.body.appendChild(popup);
+			
+	    document.getElementById("nickname").value = tg.initDataUnsafe.first_name
         }
     </script>
 </body>
