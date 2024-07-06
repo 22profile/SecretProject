@@ -25,7 +25,7 @@
         margin: 20px auto;
         padding: 0;
         max-width: 300px; 
-        border: 1px solid #ccc; 
+        border: 0px solid #ccc; 
         border-radius: 5px; 
     }
     #guestContainer::-webkit-scrollbar {
@@ -143,10 +143,11 @@
 		
 		tg.expand() 
 		
-		document.getElementById("list").textContent  = "Список приглашенных";
 		document.getElementById("nickname").textContent  = tg.initDataUnsafe.user.nickname;
+		document.getElementById("list").textContent  = "Список приглашенных:";
 		
 		document.getElementById("inviteButton").style.display = "inline-block";
+		document.getElementById("guestContainer").style.border = "1px";
 		
         document.addEventListener("DOMContentLoaded", function() {
             var guests = [
