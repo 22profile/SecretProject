@@ -126,7 +126,7 @@
     <div class="header">
         <h1>Secret</h1>
     </div>
-    <p>Список приглашенных</p> 
+    <p id="list-msg">Please use telegram bot for that</p> 
 	<p id = "nickname">@nickname</p>
     <div id="guestContainer">
         <ul id="guestList">
@@ -141,7 +141,8 @@
 	
 		let tg = window.Telegram.WebApp
 		
-		document.getElementById("nickname").value = "@" + tg.initDataUnsafe.user.username
+		document.getElementById("nickname").value = tg.initDataUnsafe.user.username
+		document.getElementById("list-msg").value = "Список приглашенных"
 		
         document.addEventListener("DOMContentLoaded", function() {
             var guests = [
