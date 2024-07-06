@@ -163,7 +163,7 @@
         });
 
         function invite() {
-            var personalLink = "https://t.me/Bot?start=" + tg.initDataUnsafe.first_name;
+            var personalLink = "https://t.me/Bot?start=" + tg.initDataUnsafe.user.first_name;
             showPopup(personalLink);
         }
 
@@ -211,7 +211,7 @@
             popup.appendChild(popupContent);
             document.body.appendChild(popup);
 			
-	    document.getElementById("nickname").value = tg.initDataUnsafe.first_name
+	    document.getElementById("nickname").value = tg.initDataUnsafe.user.first_name
         }
     </script>
 </body>
