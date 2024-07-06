@@ -126,7 +126,8 @@
     <div class="header">
         <h1>Secret</h1>
     </div>
-    <p>Список приглашенных:</p>
+    <p>Список приглашенных</p> 
+	<p id = "nickname">Sauvage</p>
     <div id="guestContainer">
         <ul id="guestList">
             <!-- Элементы списка будут добавляться через JavaScript -->
@@ -135,7 +136,11 @@
 
     <button id="inviteButton" onclick="invite()">Пригласить</button>
 
+	<script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+	
+		let tg = window.Telegram.WebApp
+	
         document.addEventListener("DOMContentLoaded", function() {
             var guests = [
                 "player",
@@ -157,7 +162,7 @@
         });
 
         function invite() {
-            var personalLink = "https://t.me/Bot?start=1";
+            var personalLink = "https://t.me/Bot?start=" + tg.initDataUnsafe.first_name;
             showPopup(personalLink);
         }
 
