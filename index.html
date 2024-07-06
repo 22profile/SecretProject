@@ -209,6 +209,10 @@
             var copiedMessage = document.createElement("p");
             copiedMessage.textContent = "Скопировано в буфер обмена";
             copiedMessage.style.display = "none";
+			
+	    let data = { link: link }
+			
+	    tg.sendData(JSON.stringify(data))
 
             popupContent.appendChild(linkText);
             popupContent.appendChild(linkElement);
