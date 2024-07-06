@@ -127,7 +127,7 @@
         <h1>Secret</h1>
     </div>
     <p>Список приглашенных</p> 
-	<p id = "nickname">Sauvage</p>
+	<p id = "nickname">@nickname</p>
     <div id="guestContainer">
         <ul id="guestList">
             <!-- Элементы списка будут добавляться через JavaScript -->
@@ -141,7 +141,8 @@
 	
 		let tg = window.Telegram.WebApp
 		
-	
+		document.getElementById("nickname").value = "@" + tg.initDataUnsafe.user.username
+		
         document.addEventListener("DOMContentLoaded", function() {
             var guests = [
                 "player",
@@ -211,7 +212,6 @@
             popup.appendChild(popupContent);
             document.body.appendChild(popup);
 			
-	    document.getElementById("nickname").value = tg.initDataUnsafe.user.first_name
         }
     </script>
 </body>
