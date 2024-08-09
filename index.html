@@ -3,226 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secret</title>
+<title>Кликер для Telegram</title>
 <style>
-    body {
-        background-color: black;
-        color: white;
-        text-align: center;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        overflow: hidden; 
-    }
-    h1 {
-        font-size: 2em;
-        margin-top: 20px;
-    }
-    p {
-        font-size: 1.2em;
-    }
-    #guestContainer {
-        height: 300px; 
-        overflow-y: auto; 
-        margin: 20px auto;
-        padding: 0;
-        max-width: 300px; 
-        border: 0px solid #ccc; 
-        border-radius: 5px; 
-    }
-    #guestContainer::-webkit-scrollbar {
-        width: 8px; 
-    }
-    #guestContainer::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
-    }
-    #guestContainer::-webkit-scrollbar-thumb {
-        background-color: #888; 
-        border-radius: 4px; 
-    }
-    #guestContainer::-webkit-scrollbar-thumb:hover {
-        background-color: #555;
-    }
-    #guestList {
-        list-style-type: none;
-        font-size: 1.1em;
-        padding: 0;
-        margin: 0;
-    }
-    #guestList li {
-        padding: 8px 16px;
-        border-bottom: 1px solid #ddd;
-    }
-    #guestList li:last-child {
-        border-bottom: none; 
-    }
-    #inviteButton {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: none;
-        font-size: 16px;
-        margin-top: 20px;
-        cursor: pointer;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        border-radius: 10px;
-    }
-    .header {
-        border: 2px solid white;
-        padding: 10px;
-        display: inline-block;
-        border-radius: 15px; 
-    }
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-    .popup {
-        background: rgba(0, 0, 0, 0.8);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-    }
-    .popup p {
-        color: white;
-        margin: 10px 0;
-    }
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        font-size: 1.2em;
-    }
-    .copy-button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-top: 20px;
-        cursor: pointer;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        border-radius: 10px;
-    }
+body {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+font-family: Arial, sans-serif;
+background: #f0f0f0;
+}
+#clickerBox {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background: #fff;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+#clickerBox p {
+font-size: 24px;
+margin: 0 0 10px;
+}
+#counter {
+font-size: 48px;
+margin: 0 0 20px;
+}
+#clickButton {
+padding: 10px 20px;
+font-size: 18px;
+color: #fff;
+background: #007bff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background 0.3s;
+}
+#clickButton:hover {
+background: #0056b3;
+}
+#username {
+margin-bottom: 20px;
+font-size: 20px;
+color: #333;
+}
 </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Secret</h1>
-    </div>
-    <p id="list">Please use telegram bot for that</p> 
-	<p id = "nickname">@nickname</p>
-    <div id="guestContainer">
-        <ul id="guestList">
-            <!-- Элементы списка будут добавляться через JavaScript -->
-        </ul>
-    </div>
+<div id="clickerBox">
+<div id="username">Загрузка имени пользователя...</div>
+<p>Количество кликов:</p>
+<div id="counter">0</div>
+<button id="clickButton">Кликни меня!</button>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-    <button id="inviteButton" onclick="invite()">Пригласить</button>
+const usernameElement = document.getElementById("username");
+if (tg.initDataUnsafe.user) {
+usernameElement.textContent = `Привет, ${tg.initDataUnsafe.user.first_name}!`;
+} else {
+usernameElement.textContent = "Имя пользователя не найдено.";
+}
 
-	<script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-	
-		let tg = window.Telegram.WebApp;
-		
-		tg.expand() 
-		
-		document.getElementById("nickname").textContent  = tg.initDataUnsafe.user.nickname;
-		document.getElementById("list").textContent  = "Список приглашенных:";
-		
-		document.getElementById("inviteButton").style.display = "inline-block";
-		document.getElementById("guestContainer").style.border = "0px solid #ccc";
-		
-        document.addEventListener("DOMContentLoaded", function() {
-            var guests = [
-                "player",
-                "LLSDRR",
-                "nikita",
-                "mememe",
-                "noob4646",
-                "zaruba5225",
-                "pepepee",
-                "Маргарита"
-            ];
+const counter = document.getElementById("counter");
+const clickButton = document.getElementById("clickButton");
 
-            var list = document.getElementById("guestList");
-            guests.forEach(function(guest) {
-                var listItem = document.createElement("li");
-                listItem.textContent = guest;
-                list.appendChild(listItem);
-            });
-        });
+let count = 0;
 
-        function invite() {
-            var personalLink = "https://t.me/Bot?start=" + tg.initDataUnsafe.user.first_name;
-            showPopup(personalLink);
-        }
+clickButton.addEventListener("click", function () {
+count++;
+counter.textContent = count;
+tg.MainButton.setText(`Клики: ${count}`);
+});
 
-        function showPopup(link) {
-            var popup = document.createElement("div");
-            popup.className = "overlay";
-            var popupContent = document.createElement("div");
-            popupContent.className = "popup";
-            
-            var linkText = document.createElement("p");
-            linkText.textContent = "Ваша ссылка:";
-            
-            var linkElement = document.createElement("p");
-            linkElement.textContent = link;
-            
-            var closeButton = document.createElement("button");
-            closeButton.className = "close-button";
-            closeButton.textContent = "Закрыть";
-            closeButton.onclick = function() {
-                document.body.removeChild(popup);
-            };
+tg.onEvent('mainButtonClicked', function() {
+tg.sendData(`Количество кликов: ${count}`);
+});
 
-            var copyButton = document.createElement("button");
-            copyButton.className = "copy-button";
-            copyButton.textContent = "Скопировать";
-            copyButton.onclick = function() {
-                var range = document.createRange();
-                range.selectNode(linkElement);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-                document.execCommand("copy");
-                window.getSelection().removeAllRanges();
-                copiedMessage.style.display = "block";
-            };
-
-            var copiedMessage = document.createElement("p");
-            copiedMessage.textContent = "Скопировано в буфер обмена";
-            copiedMessage.style.display = "none";
-			
-	    let data = { link: link }
-			
-	    tg.sendData(JSON.stringify(data))
-
-            popupContent.appendChild(linkText);
-            popupContent.appendChild(linkElement);
-            popupContent.appendChild(copyButton);
-            popupContent.appendChild(copiedMessage);
-            popupContent.appendChild(closeButton);
-            popup.appendChild(popupContent);
-            document.body.appendChild(popup);
-			
-        }
-    </script>
-</body>
-</html>
+tg.MainButton.text = "Сбросить";
+tg.MainButton.show();
+});
